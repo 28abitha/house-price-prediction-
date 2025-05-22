@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login Page</title>
+
+    <style>
+        /* Reset default styles and set global font */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+        
+        /* Set background gradient and center the login container */
+        body {
+            background: linear-gradient(to right, #ff7eb3, #ff758c);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        /* Styling for the login container */
+        .login-container {
+            background: #ffffff;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.2);
+            text-align: center;
+            max-width: 400px;
+            width: 90%;
+            animation: fadeIn 1s ease-in-out; /* Smooth fade-in animation */
+        }
+
+        /* Header styling */
+        h1 {
+            color: #333;
+            margin-bottom: 20px;
+            font-size: 26px;
+        }
+
+        /* Label styling */
+        label {
+            font-weight: 600;
+            display: block;
+            margin: 10px 0 5px;
+            color: #444;
+            text-align: left;
+        }
+
+        /* Input field styling */
+        input {
+            width: 100%;
+            padding: 12px;
+            border-radius: 6px;
+            border: 2px solid #ddd;
+            outline: none;
+            transition: all 0.3s ease;
+            font-size: 16px;
+        }
+
+        /* Highlight input field when focused */
+        input:focus {
+            border-color: #ff4d6d;
+            box-shadow: 0px 0px 5px rgba(255, 77, 109, 0.5);
+        }
+
+        /* Login button styling */
+        .login-btn {
+            width: 100%;
+            padding: 12px;
+            margin-top: 15px;
+            background: #ff4d6d;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            font-size: 18px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        /* Button hover effect */
+        .login-btn:hover {
+            background: #e63e5c;
+            transform: scale(1.05);
+        }
+
+        /* Register link text styling */
+        .register-link {
+            margin-top: 15px;
+            font-size: 14px;
+            color: #333;
+        }
+
+        /* Styling for the register link */
+        .register-link a {
+            color: #ff4d6d;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        /* Add underline effect on hover */
+        .register-link a:hover {
+            text-decoration: underline;
+        }
+
+        /* Animation effect when the page loads */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Login form container -->
+    <div class="login-container">
+        <h1>🔑 Login</h1>
+        
+        <!-- Username Input -->
+        <label>👤 Username:</label>
+        <input type="text" placeholder="Enter your username">
+        
+        <!-- Password Input -->
+        <label>🔒 Password:</label>
+        <input type="password" placeholder="Enter your password">
+        
+        <!-- Login Button -->
+        <button class="login-btn">Login</button>
+        
+        <!-- Link to Registration Page -->
+        <div class="register-link">
+            Don't have an account? <a href="register.html">Register here</a>
+        </div>
+    </div>
+
+    <script>
+        /**
+         * Event listener for login button click.
+         * Checks user credentials stored in localStorage.
+         */
+        document.querySelector(".login-btn").addEventListener("click", function () {
+            // Get input values
+            const username = document.querySelector("input[type='text']").value;
+            const password = document.querySelector("input[type='password']").value;
+            
+            // Retrieve stored user credentials from localStorage
+            const storedUser = JSON.parse(localStorage.getItem("registeredUser"));
+
+            // Validate user credentials
+            if (storedUser && storedUser.username === username && storedUser.password === password) {
+                alert("Login successful!");
+                window.location.href = "homepage.html"; // Redirect to a dashboard or home page
+            } else {
+                alert("Invalid username or password!");
+            }
+        });
+    </script>
+
+</body>
+</html>
+

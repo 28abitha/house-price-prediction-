@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>House Price Prediction</title>
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+        
+        body {
+            background: linear-gradient(to right, #4facfe, #00f2fe);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            flex-direction: column;
+        }
+
+        .container {
+            background: #ffffff;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.2);
+            text-align: center;
+            max-width: 450px;
+            width: 90%;
+            animation: fadeIn 1s ease-in-out;
+        }
+
+        h1 {
+            color: #333;
+            margin-bottom: 20px;
+            font-size: 26px;
+        }
+
+        label {
+            font-weight: 600;
+            display: block;
+            margin: 10px 0 5px;
+            color: #444;
+        }
+
+        input, select {
+            width: 100%;
+            padding: 10px;
+            border-radius: 6px;
+            border: 2px solid #ddd;
+            outline: none;
+            transition: all 0.3s ease;
+            font-size: 16px;
+        }
+
+        input:focus, select:focus {
+            border-color: #00c6ff;
+            box-shadow: 0px 0px 5px rgba(0, 198, 255, 0.5);
+        }
+
+        button {
+            width: 100%;
+            padding: 12px;
+            margin-top: 15px;
+            background: #ff5733;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            font-size: 18px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        button:hover {
+            background: #e64a19;
+            transform: scale(1.05);
+        }
+
+        .result {
+            font-size: 22px;
+            font-weight: bold;
+            color: #007bff;
+            margin-top: 15px;
+            padding: 10px;
+            background: #f0f8ff;
+            border-radius: 6px;
+            box-shadow: 0px 3px 10px rgba(0, 123, 255, 0.2);
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+    </style>
+</head>
+<body>
+    <nav>
+        <ul>
+            <li><a href="/">Home</a></li>
+            <li><a href="/login">Login</a></li>
+            <li><a href="/register">Register</a></li>
+        </ul>
+    </nav>
+    
+    <h1>🏡 House Price Prediction</h1>
+    
+    <div class="container">
+        <label>📏 Area (in sqft):</label>
+        <input type="number" id="area" placeholder="Enter area in sqft">
+        
+        <label>🛏 Number of Rooms:</label>
+        <input type="number" id="rooms" placeholder="Enter number of rooms">
+        
+        <label>🚿 Number of Bathrooms:</label>
+        <input type="number" id="bathrooms" placeholder="Enter number of bathrooms">    
+        
+        <label>📍 Location:</label>
+        <select id="location">
+            <option>Select Location</option>
+            <option>Anna Nagar</option>
+            <option>KK Nagar</option>
+            <option>Tallakulam</option>
+            <option>Chokkikulam</option>
+            <option>Madakulam</option>
+            <option>Simmakkal</option>
+            <option>Narimedu</option>
+            <option>Bypass Road</option>
+            <option>Koodal Nagar</option>
+            <option>Andalpuram</option>
+        </select>
+
+        <label>🏠 Age of House (in years):</label>
+        <input type="number" id="age" placeholder="Enter age of house">
+        
+        <button onclick="predictPrice()">🔮 Predict Price</button>
+        
+        <div class="result" id="predicted-price">Predicted Price: ---</div>
+    </div>
+    
+    <script>
+        function predictPrice() {
+            const formData = {
+                sqft: document.getElementById("area").value,
+                rooms: document.getElementById("rooms").value,
+                bathrooms: document.getElementById("bathrooms").value,
+                location: document.getElementById("location").value,
+                age: document.getElementById("age").value
+            };
+            
+            fetch("/predict", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify(formData)
+            })
+            .then(response => response.json())
+            .then(data => {
+                document.getElementById("predicted-price").innerText = "Estimated Price: " + data.price;
+            })
+            .catch(error => console.error("Error:", error));
+        }
+    </script>
+</body>
+</html>
